@@ -1,12 +1,19 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import {useEffect} from "react";
+import {useState} from "react";
+import {Link, NavLink} from "react-router-dom";
+import {FaUserLarge} from "react-icons/fa6";
 
 const Header = () => {
     const [hidden, setHidden] = useState(true);
     const [darkMode, setDarkMode] = useState(
         JSON.parse(localStorage.getItem("darkMode")) || false
     );
+    const [showDropdown, setShowDropdown] = useState(false); // New state variable for dropdown menu
+
+
+    const toggleDropdown = () => {
+        setShowDropdown(!showDropdown);
+    };
 
     useEffect(() => {
         localStorage.setItem("darkMode", JSON.stringify(darkMode));
@@ -19,13 +26,14 @@ const Header = () => {
     }, [darkMode]);
 
     const activeClass =
-        "text-base block py-2 pr-4 pl-3 text-white bg-bgkl-700 rounded md:bg-transparent md:text-bgkl-700 md:p-0 dark:text-white";
+        "text-base block py-2 pr-4 pl-3 text-white bg-second-700 rounded md:bg-transparent md:text-second-700 md:p-0 dark:text-white";
     const inActiveClass =
-        "text-base block py-2 pr-4 pl-3 text-bgkd-700 rounded hover:bg-bgkd-100 md:hover:bg-transparent md:hover:text-bgkl-700 md:p-0 md:dark:hover:text-white dark:text-bgkd-400 dark:hover:bg-bgkd-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-bgkd-700";
+        "text-base block py-2 pr-4 pl-3 text-first-700 rounded hover:bg-first-100 md:hover:bg-transparent md:hover:text-second-700 md:p-0 md:dark:hover:text-white dark:text-first-400 dark:hover:bg-first-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-first-700";
 
     return (
         <header className="sticky z-20 top-0 ">
-            <nav className="bg-white border-b-2 border-bgkd-200 px-2 sm:px-4 py-2 dark:bg-bgkd-900 dark:border-b-1 dark:border-bgkd-700">
+            <nav
+                className="bg-white border-b-2 border-first-200 px-2 sm:px-4 py-2 dark:bg-first-900 dark:border-b-1 dark:border-first-700">
                 <div className=" flex flex-wrap justify-between items-center mx-auto">
                     <Link to="/" className="flex items-center">
                             <span className="text-2xl self-center font-semibold whitespace-nowrap dark:text-white">
@@ -36,14 +44,38 @@ const Header = () => {
                     </Link>
 
                     <div id="mobile-nav" className="flex md:order-2">
-                        <div className="flex gap-2">
-                        <div>
+                        <div className="flex gap-2 ">
+                            <div className="relative">
+                                <button onClick={toggleDropdown}
+                                        type="button"
+                                        className="flex items-center p-2 mr-2 text-xs font-medium text-first-700 bg-white rounded-lg border border-first-200 toggle-dark-state-example hover:bg-first-100 hover:text-second-700 focus:z-10 focus:ring-2 focus:ring-first-300 dark:focus:ring-first-500 dark:bg-first-800 focus:outline-none dark:text-first-400 dark:border-first-600 dark:hover:text-white dark:hover:bg-first-700">
+                                     <span className="">
+     <FaUserLarge className="h-4 w-5"/>
+
+    </span>
+
+                                </button>
+
+
+                                {showDropdown && (
+                                    <div
+                                        className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+                                        <Link to="/login"
+                                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Login</Link>
+                                        <Link to="/logout"
+                                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</Link>
+                                        <Link to="/profile"
+                                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</Link>
+                                    </div>
+                                )}
+                            </div>
+                            <div>
                                 <button
                                     onClick={() => setDarkMode(!darkMode)}
                                     data-tooltip-target="navbar-search-example-toggle-dark-mode-tooltip"
                                     type="button"
                                     data-toggle-dark="light"
-                                    className="flex items-center p-2 mr-2 text-xs font-medium text-bgkd-700 bg-white rounded-lg border border-bgkd-200 toggle-dark-state-example hover:bg-bgkd-100 hover:text-bgkl-700 focus:z-10 focus:ring-2 focus:ring-bgkd-300 dark:focus:ring-bgkd-500 dark:bg-bgkd-800 focus:outline-none dark:text-bgkd-400 dark:border-bgkd-600 dark:hover:text-white dark:hover:bg-bgkd-700"
+                                    className="flex items-center p-2 mr-2 text-xs font-medium text-first-700 bg-white rounded-lg border border-first-200 toggle-dark-state-example hover:bg-first-100 hover:text-second-700 focus:z-10 focus:ring-2 focus:ring-first-300 dark:focus:ring-first-500 dark:bg-first-800 focus:outline-none dark:text-first-400 dark:border-first-600 dark:hover:text-white dark:hover:bg-first-700"
                                 >
                                     {darkMode ? (
                                         <svg
@@ -69,18 +101,21 @@ const Header = () => {
                                             viewBox="0 0 20 20"
                                             xmlns="http://www.w3.org/2000/svg"
                                         >
-                                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                                            <path
+                                                d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
                                         </svg>
                                     )}
                                 </button>
                             </div>
+
                         </div>
+
 
                         <button
                             onClick={() => setHidden(!hidden)}
                             data-collapse-toggle="navbar-search"
                             type="button"
-                            className="inline-flex items-center p-2 text-sm text-bgkd-500 rounded-lg md:hidden hover:bg-bgkd-100 focus:outline-none focus:ring-2 focus:ring-bgkd-200 dark:text-bgkd-400 dark:hover:bg-bgkd-700 dark:focus:ring-bgkd-600"
+                            className="inline-flex items-center p-2 text-sm text-first-500 rounded-lg md:hidden hover:bg-first-100 focus:outline-none focus:ring-2 focus:ring-first-200 dark:text-first-400 dark:hover:bg-first-700 dark:focus:ring-first-600"
                             aria-controls="navbar-search"
                             aria-expanded="false"
                         >
@@ -108,27 +143,48 @@ const Header = () => {
                         id="navbar-search"
                     >
                         <div className="relative mt-3 md:hidden"></div>
-                        <ul className="flex flex-col p-4 mt-4 bg-bgkd-50 rounded-lg border border-bgkd-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-bgkd-800 md:dark:bg-bgkd-900 dark:border-bgkd-700">
+                        <ul className="flex flex-col p-4 mt-4 bg-first-50 rounded-lg border border-first-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-first-800 md:dark:bg-first-900 dark:border-first-700">
                             <li>
                                 <NavLink
                                     to="/"
-                                    className={({ isActive }) =>
+                                    className={({isActive}) =>
                                         isActive ? activeClass : inActiveClass
                                     }
                                     end
                                 >
-                                    Self-Service
+                                    Home
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="/house-list"
+                                    className={({isActive}) =>
+                                        isActive ? activeClass : inActiveClass
+                                    }
+                                    end
+                                >
+                                    Houses
                                 </NavLink>
                             </li>
 
                             <li>
                                 <NavLink
                                     to="/contact"
-                                    className={({ isActive }) =>
+                                    className={({isActive}) =>
                                         isActive ? activeClass : inActiveClass
                                     }
                                 >
-                                    Contactez-nous
+                                    About
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="/contact"
+                                    className={({isActive}) =>
+                                        isActive ? activeClass : inActiveClass
+                                    }
+                                >
+                                    Contact
                                 </NavLink>
                             </li>
                         </ul>

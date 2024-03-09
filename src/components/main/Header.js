@@ -155,6 +155,18 @@ const Header = () => {
                                     Home
                                 </NavLink>
                             </li>
+
+                            <li>
+                                <NavLink
+                                    to="/admin"
+                                    className={({isActive}) =>
+                                        isActive ? activeClass : inActiveClass
+                                    }
+                                >
+                                    Admin
+                                </NavLink>
+                            </li>
+
                             <li>
                                 <NavLink
                                     to="/house-list"
@@ -166,7 +178,7 @@ const Header = () => {
                                     Houses
                                 </NavLink>
                             </li>
-
+                            
                             <li>
                                 <NavLink
                                     to="/contact"

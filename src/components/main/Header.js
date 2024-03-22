@@ -2,6 +2,8 @@ import {useEffect} from "react";
 import {useState} from "react";
 import {Link, NavLink} from "react-router-dom";
 import {FaUserLarge} from "react-icons/fa6";
+import Logout from "../../pages/Logout";
+
 
 const Header = () => {
     const [hidden, setHidden] = useState(true);
@@ -9,7 +11,12 @@ const Header = () => {
         JSON.parse(localStorage.getItem("darkMode")) || false
     );
     const [showDropdown, setShowDropdown] = useState(false); // New state variable for dropdown menu
-
+    const [showAccount, setShowAccount] = useState(false)
+    const handleAccountClick = () => {
+        setShowAccount(!showAccount)
+    }
+    const isLoggedIn = localStorage.getItem("token")
+    const userRole = localStorage.getItem("userRole")
 
     const toggleDropdown = () => {
         setShowDropdown(!showDropdown);
@@ -53,7 +60,6 @@ const Header = () => {
      <FaUserLarge className="h-4 w-5"/>
 
     </span>
-
                                 </button>
 
 
@@ -61,11 +67,16 @@ const Header = () => {
                                     <div
                                         className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
                                         <Link to="/login"
+                                              className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${showAccount ? "show" : ""}`}
+                                        /> {isLoggedIn ? (
+                                        <Logout/>
+                                    ) : (
+                                        <Link to="/login"
                                               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Login</Link>
-                                        <Link to="/logout"
-                                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</Link>
+                                    )}
                                         <Link to="/profile"
-                                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</Link>
+                                              onClick={handleAccountClick}
+                                              className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${showAccount ? "show" : ""}`}>Account</Link>
                                     </div>
                                 )}
                             </div>
@@ -157,14 +168,15 @@ const Header = () => {
                             </li>
 
                             <li>
-                                <NavLink
-                                    to="/admin"
-                                    className={({isActive}) =>
-                                        isActive ? activeClass : inActiveClass
-                                    }
-                                >
-                                    Admin
-                                </NavLink>
+                                {isLoggedIn && userRole === "ROLE_ADMIN" && (
+                                    <NavLink
+                                        to="/admin"
+                                        className={({isActive}) =>
+                                            isActive ? activeClass : inActiveClass
+                                        }
+                                    >
+                                        Admin
+                                    </NavLink>)}
                             </li>
 
                             <li>
@@ -178,7 +190,7 @@ const Header = () => {
                                     Houses
                                 </NavLink>
                             </li>
-                            
+
                             <li>
                                 <NavLink
                                     to="/contact"

@@ -83,13 +83,6 @@ const Registration = () => {
                                className=" w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
                                autoComplete="off"/>
                     </div>
-                    <div className="mb-4 flex items-center">
-                        <input type="checkbox" id="remember" name="remember" className="text-blue-500"/>
-                        <label form="remember" className="text-gray-600 ml-2">Remember Me</label>
-                    </div>
-                    <div className="mb-6 text-blue-500">
-                        <Link alt="boss" className="hover:underline" to={"/"}>Forgot Password?</Link>
-                    </div>
                     <button type="submit"
                             className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full">Login
                     </button>

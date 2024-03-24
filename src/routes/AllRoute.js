@@ -1,16 +1,19 @@
 import {Routes, Route} from "react-router-dom";
-import Home from "../pages/Home";
-import {Admin, Login, Profile, Registration} from "../pages";
+import Home from "../components/home/Home";
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
 
 
 export const AllRoutes = () => {
     return (
-        <Routes>
-            <Route path="/" element={<Home/>}/>
-            <Route path="/admin" element={<Admin/>}/>
-            <Route path={"/login"} element={<Login/>}/>
-            <Route path={"/registration"} element={<Registration/>}/>
-            <Route path={"/profile"} element={<Profile/>}/>
-        </Routes>
+        <main>
+
+            <Header/>
+            <Routes>
+                <Route path="/" element={<Home/>}/>
+            </Routes>
+
+            <Footer/>
+        </main>
     );
 };

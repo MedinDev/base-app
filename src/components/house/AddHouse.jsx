@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {addHouse} from "../../utils/ApiFunctions";
+import {addHouse} from "../utils/ApiFunctions";
 import HouseTypeSelector from "../common/HouseTypeSelector";
 
 const AddHouse = () => {

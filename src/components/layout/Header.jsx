@@ -2,7 +2,7 @@ import {useEffect} from "react";
 import {useState} from "react";
 import {Link, NavLink} from "react-router-dom";
 import {FaUserLarge} from "react-icons/fa6";
-import Logout from "../../pages/Logout";
+import Logout from "../auth/Logout";
 
 
 const Header = () => {

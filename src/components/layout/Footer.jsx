@@ -8,7 +8,7 @@ const Footer = () => {
                 <div className="grid gap-10 row-gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-4">
                     <div className="sm:col-span-2">
                         <a
-                            href="/"
+                            href="/public"
                             aria-label="Go home"
                             title="Company"
                             className="inline-flex items-center"
@@ -59,7 +59,7 @@ const Footer = () => {
                         <div className="flex">
                             <p className="mr-1 dark:text-first-300 text-first-600">Address:</p>
                             <a
-                                href="/"
+                                href="/public"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="Our address"
@@ -76,7 +76,7 @@ const Footer = () => {
             </span>
                         <div className="flex items-center mt-1 space-x-3">
                             <a
-                                href="/"
+                                href="/public"
                                 className="text-first-500 transition-colors duration-300 hover:text-third-400"
                             >
                                 <svg viewBox="0 0 24 24" fill="currentColor" className="h-5">
@@ -85,7 +85,7 @@ const Footer = () => {
                                 </svg>
                             </a>
                             <a
-                                href="/"
+                                href="/public"
                                 className="text-first-500 transition-colors duration-300 hover:text-third-400"
                             >
                                 <svg viewBox="0 0 30 30" fill="currentColor" className="h-6">
@@ -114,7 +114,7 @@ const Footer = () => {
                     <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row">
                         <li>
                             <a
-                                href="/"
+                                href="/public"
                                 className="text-sm dark:text-first-300 text-first-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
                             >
                                 F.A.Q
@@ -122,7 +122,7 @@ const Footer = () => {
                         </li>
                         <li>
                             <a
-                                href="/"
+                                href="/public"
                                 className="text-sm dark:text-first-300 text-first-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
                             >
                                 Privacy Policy
@@ -130,7 +130,7 @@ const Footer = () => {
                         </li>
                         <li>
                             <a
-                                href="/"
+                                href="/public"
                                 className="text-sm dark:text-first-300 text-first-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
                             >
                                 Terms &amp; Conditions

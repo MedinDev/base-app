@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {getHouseTypes} from "../../utils/ApiFunctions";
+import {getHouseTypes} from "../utils/ApiFunctions";
 
 const HouseTypeSelector = ({handleHouseInputChange, newHouse}) => {
     const [houseTypes, setHouseTypes] = useState([""])

@@ -108,6 +108,22 @@ export async function getHouseById(houseId) {
     }
 }
 
+
+/* This function saves a new booking to the database */
+export async function bookHouse(houseId, booking) {
+    try {
+        const response = await api.post(`/bookings/house/${houseId}/booking`, booking)
+        return response.data
+    } catch (error) {
+        if (error.response && error.response.data) {
+            throw new Error(error.response.data)
+        } else {
+            throw new Error(`Error booking house : ${error.message}`)
+        }
+    }
+}
+
+
 /* This function gets all bookings from the database */
 export async function getAllBookings() {
     try {
@@ -145,10 +161,10 @@ export async function cancelBooking(bookingId) {
 }
 
 /* This function gets all available Houses from the database with a given date and a room type */
-export async function getAvailableRooms(checkInDate, checkOutDate, roomType) {
+export async function getAvailableHouses(checkInDate, checkOutDate, houseType) {
     return await api.get(
-        `rooms/available-rooms?checkInDate=${checkInDate}
-		&checkOutDate=${checkOutDate}&roomType=${roomType}`
+        `houses/available-houses?checkInDate=${checkInDate}
+		&checkOutDate=${checkOutDate}&houseType=${houseType}`
     )
 }
 

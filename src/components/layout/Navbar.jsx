@@ -5,7 +5,7 @@ import {FaUserLarge} from "react-icons/fa6";
 import Logout from "../auth/Logout";
 
 
-const Header = () => {
+const Navbar = () => {
     const [hidden, setHidden] = useState(true);
     const [darkMode, setDarkMode] = useState(
         JSON.parse(localStorage.getItem("darkMode")) || false
@@ -190,6 +190,17 @@ const Header = () => {
                                     Houses
                                 </NavLink>
                             </li>
+                            <li>
+                                <NavLink
+                                    to="/browse-all-houses"
+                                    className={({isActive}) =>
+                                        isActive ? activeClass : inActiveClass
+                                    }
+                                    end
+                                >
+                                    All House
+                                </NavLink>
+                            </li>
 
                             <li>
                                 <NavLink
@@ -203,7 +214,7 @@ const Header = () => {
                             </li>
                             <li>
                                 <NavLink
-                                    to="/contact"
+                                    to="/add-house"
                                     className={({isActive}) =>
                                         isActive ? activeClass : inActiveClass
                                     }
@@ -218,4 +229,4 @@ const Header = () => {
         </header>
     );
 };
-export default Header;
+export default Navbar;

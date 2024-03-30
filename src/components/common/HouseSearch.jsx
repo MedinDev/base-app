@@ -54,7 +54,7 @@ const HouseSearch = () => {
         setSearchQuery({
             checkInDate: "",
             checkOutDate: "",
-            roomType: ""
+            houseType: ""
         })
         setAvailableHouses([])
     }

@@ -12,12 +12,8 @@ export const getHeader = () => {
     }
 }
 
-/* This function adds a new house to the database */
-export async function addHouse(photo, houseType,
-                               housePrice, houseRoom,
-                               houseBathroom, houseSurface,
-                               houseCountry, houseAddress,
-                               houseYear, houseDescription) {
+/* This function adds a new house  to the database */
+export async function addHouse(photo, houseType, housePrice, houseRoom, houseBathroom, houseSurface, houseCountry, houseAddress, houseYear, houseDescription) {
     const formData = new FormData()
     formData.append("photo", photo)
     formData.append("houseType", houseType)
@@ -40,30 +36,27 @@ export async function addHouse(photo, houseType,
     }
 }
 
-
 /* This function gets all house types from the database */
 export async function getHouseTypes() {
     try {
-        const response = await api.get("houses/house/types");
-        return response.data;
+        const response = await api.get("/houses/house/types")
+        return response.data
     } catch (error) {
-        console.error("Error fetching house types:", error);
-        throw new Error("An unexpected error occurred while fetching house types.");
+        throw new Error("Error fetching house types")
     }
 }
-
 
 /* This function gets all houses from the database */
 export async function getAllHouses() {
     try {
-        const response = await api.get("houses/all-houses")
-        return response.data
+        const result = await api.get("/houses/all-houses")
+        return result.data
     } catch (error) {
-        throw new Error("An unexpected error occurred while fetching all houses.")
+        throw new Error("Error fetching houses")
     }
 }
 
-/* This function deletes a houses by ID */
+/* This function deletes a house by the ID */
 export async function deleteHouse(houseId) {
     try {
         const result = await api.delete(`/houses/delete/house/${houseId}`, {
@@ -71,16 +64,12 @@ export async function deleteHouse(houseId) {
         })
         return result.data
     } catch (error) {
-        throw new Error("An unexpected error occurred while deleting house.")
+        throw new Error(`Error deleting house ${error.message}`)
     }
 }
 
 /* This function update a house */
-export async function updateHouse(houseId, photo, houseType,
-                                  housePrice, houseRoom,
-                                  houseBathroom, houseSurface,
-                                  houseCountry, houseAddress,
-                                  houseYear, houseDescription) {
+export async function updateHouse(houseId, photo, houseType, housePrice, houseRoom, houseBathroom, houseSurface, houseCountry, houseAddress, houseYear, houseDescription) {
     const formData = new FormData()
     formData.append("photo", photo)
     formData.append("houseType", houseType)
@@ -92,22 +81,21 @@ export async function updateHouse(houseId, photo, houseType,
     formData.append("houseAddress", houseAddress)
     formData.append("houseYear", houseYear)
     formData.append("houseDescription", houseDescription)
-
-    return await api.put(`/houses/update/house/${houseId}`, formData, {
+    const response = await api.put(`/houses/update/${houseId}`, formData, {
         headers: getHeader()
     })
+    return response
 }
 
 /* This function gets a house by the id */
 export async function getHouseById(houseId) {
     try {
-        const response = await api.get(`/houses/house/${houseId}`)
-        return response.data
+        const result = await api.get(`/houses/house/${houseId}`)
+        return result.data
     } catch (error) {
-        throw new Error("An unexpected error occurred while fetching house.")
+        throw new Error(`Error fetching house ${error.message}`)
     }
 }
-
 
 /* This function saves a new booking to the database */
 export async function bookHouse(houseId, booking) {
@@ -123,16 +111,15 @@ export async function bookHouse(houseId, booking) {
     }
 }
 
-
 /* This function gets all bookings from the database */
 export async function getAllBookings() {
     try {
-        const response = await api.get("bookings/all-bookings", {
+        const result = await api.get("/bookings/all-bookings", {
             headers: getHeader()
         })
-        return response.data
+        return result.data
     } catch (error) {
-        throw new Error(`An unexpected error occurred while fetching all bookings : ${error.message}`)
+        throw new Error(`Error fetching bookings : ${error.message}`)
     }
 }
 
@@ -143,7 +130,7 @@ export async function getBookingByConfirmationCode(confirmationCode) {
         return result.data
     } catch (error) {
         if (error.response && error.response.data) {
-            throw new Error(error.response.data.message)
+            throw new Error(error.response.data)
         } else {
             throw new Error(`Error find booking : ${error.message}`)
         }
@@ -160,12 +147,13 @@ export async function cancelBooking(bookingId) {
     }
 }
 
-/* This function gets all available Houses from the database with a given date and a room type */
+/* This function gets all available houses from the database with a given date and a house type */
 export async function getAvailableHouses(checkInDate, checkOutDate, houseType) {
-    return await api.get(
+    const result = await api.get(
         `houses/available-houses?checkInDate=${checkInDate}
 		&checkOutDate=${checkOutDate}&houseType=${houseType}`
     )
+    return result
 }
 
 /* This function register a new user */
@@ -245,5 +233,3 @@ export async function getBookingsByUserId(userId, token) {
         throw new Error("Failed to fetch bookings")
     }
 }
-
-

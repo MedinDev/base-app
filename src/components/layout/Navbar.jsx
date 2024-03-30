@@ -72,11 +72,12 @@ const Navbar = () => {
                                         <Logout/>
                                     ) : (
                                         <Link to="/login"
+                                              onClick={handleAccountClick}
                                               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Login</Link>
                                     )}
-                                        <Link to="/profile"
-                                              onClick={handleAccountClick}
-                                              className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${showAccount ? "show" : ""}`}>Account</Link>
+                                        {/*<Link to="/profile"*/}
+                                        {/*      onClick={handleAccountClick}*/}
+                                        {/*      className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${showAccount ? "show" : ""}`}></Link>*/}
                                     </div>
                                 )}
                             </div>
@@ -181,47 +182,26 @@ const Navbar = () => {
 
                             <li>
                                 <NavLink
-                                    to="/house-list"
-                                    className={({isActive}) =>
-                                        isActive ? activeClass : inActiveClass
-                                    }
-                                    end
-                                >
-                                    Houses
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink
                                     to="/browse-all-houses"
                                     className={({isActive}) =>
                                         isActive ? activeClass : inActiveClass
                                     }
                                     end
                                 >
-                                    All House
+                                    All Houses
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="/find-bookings"
+                                    className={({isActive}) =>
+                                        isActive ? activeClass : inActiveClass
+                                    }
+                                >
+                                    Find Bookings
                                 </NavLink>
                             </li>
 
-                            <li>
-                                <NavLink
-                                    to="/contact"
-                                    className={({isActive}) =>
-                                        isActive ? activeClass : inActiveClass
-                                    }
-                                >
-                                    About
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink
-                                    to="/add-house"
-                                    className={({isActive}) =>
-                                        isActive ? activeClass : inActiveClass
-                                    }
-                                >
-                                    Contact
-                                </NavLink>
-                            </li>
                         </ul>
                     </div>
                 </div>

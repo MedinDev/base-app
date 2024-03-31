@@ -228,7 +228,7 @@ const EditHouse = () => {
                     </button>
                     <Link
                         className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-first-950-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600"
-                        to={"/existing-house"}> Back
+                        to={"/existing-houses"}> Back
                     </Link>
                 </div>
             </form>

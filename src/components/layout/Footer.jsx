@@ -1,142 +1,66 @@
+import {Link} from "react-router-dom";
+
 const Footer = () => {
     const currentYear = new Date().getFullYear();
-
-
     return (
-        <footer className="bg-white dark:bg-first-900">
-            <div className="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 border-t">
-                <div className="grid gap-10 row-gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-4">
-                    <div className="sm:col-span-2">
-                        <a
-                            href="/public"
-                            aria-label="Go home"
-                            title="Company"
-                            className="inline-flex items-center"
-                        >
-              <span className="ml-2 text-xl font-bold tracking-wide text-first-800 dark:text-white uppercase">
-                RealEstate
-              </span>
-                            <h5 className="dark:text-white">OBSHR</h5>
-                        </a>
-                        <div className="mt-6 lg:max-w-sm ">
-                            <p className="text-sm text-first-400">
-                                Depuis quatre ans, nous sommes fiers de servir nos clients en
-                                tant qu’agence spécialisée dans l’achat de marchandises en
-                                Chine.
-                            </p>
-                            <p className="mt-4 text-sm text-first-400">
-                                Liste des documents à telecharger:
-                            </p>
 
-                        </div>
-                    </div>
-                    <div className="space-y-2 text-sm ">
-                        <p className="text-base font-bold tracking-wide text-first-900 dark:text-white">
-                            Contacts
-                        </p>
-                        <div className="flex">
-                            <p className="mr-1 dark:text-first-300 text-first-600 ">Phone:</p>
-                            <a
-                                href="tel:008613860555031"
-                                aria-label="Our phone"
-                                title="Our phone"
-                                className="text-first-500  transition-colors duration-300 text-deep-purple-accent-400 hover:text-third-400"
-                            >
-                                +86 138 6055 5031
-                            </a>
-                        </div>
-                        <div className="flex">
-                            <p className="mr-1 dark:text-first-300 text-first-600">Email:</p>
-                            <a
-                                href="mailto:vertexshop241@gmail.com"
-                                aria-label="Our email"
-                                title="Our email"
-                                className="text-first-500  transition-colors duration-300 text-deep-purple-accent-400 hover:text-third-400"
-                            >
-                                contact@medinchina.me
-                            </a>
-                        </div>
-                        <div className="flex">
-                            <p className="mr-1 dark:text-first-300 text-first-600">Address:</p>
-                            <a
-                                href="/public"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Our address"
-                                title="Our address"
-                                className="text-first-500  transition-colors duration-300 text-deep-purple-accent-400 hover:text-third-400"
-                            >
-                                Sanming, Fujian, China, 365000
-                            </a>
-                        </div>
-                    </div>
-                    <div>
-            <span className="text-base font-bold tracking-wide text-first-900 dark:text-white">
-              Social
+        <footer className="bg-white dark:bg-first-900">
+            <div className="container px-6 py-8 mx-auto">
+                <div className="flex flex-col items-center text-center">
+                    <Link to="/" className="flex items-center">
+                            <span className="text-2xl self-center font-semibold whitespace-nowrap dark:text-white">
+              RealEstate
             </span>
-                        <div className="flex items-center mt-1 space-x-3">
-                            <a
-                                href="/public"
-                                className="text-first-500 transition-colors duration-300 hover:text-third-400"
-                            >
-                                <svg viewBox="0 0 24 24" fill="currentColor" className="h-5">
-                                    <path
-                                        d="M24,4.6c-0.9,0.4-1.8,0.7-2.8,0.8c1-0.6,1.8-1.6,2.2-2.7c-1,0.6-2,1-3.1,1.2c-0.9-1-2.2-1.6-3.6-1.6 c-2.7,0-4.9,2.2-4.9,4.9c0,0.4,0,0.8,0.1,1.1C7.7,8.1,4.1,6.1,1.7,3.1C1.2,3.9,1,4.7,1,5.6c0,1.7,0.9,3.2,2.2,4.1 C2.4,9.7,1.6,9.5,1,9.1c0,0,0,0,0,0.1c0,2.4,1.7,4.4,3.9,4.8c-0.4,0.1-0.8,0.2-1.3,0.2c-0.3,0-0.6,0-0.9-0.1c0.6,2,2.4,3.4,4.6,3.4 c-1.7,1.3-3.8,2.1-6.1,2.1c-0.4,0-0.8,0-1.2-0.1c2.2,1.4,4.8,2.2,7.5,2.2c9.1,0,14-7.5,14-14c0-0.2,0-0.4,0-0.6 C22.5,6.4,23.3,5.5,24,4.6z"/>
-                                </svg>
-                            </a>
-                            <a
-                                href="/public"
-                                className="text-first-500 transition-colors duration-300 hover:text-third-400"
-                            >
-                                <svg viewBox="0 0 30 30" fill="currentColor" className="h-6">
-                                    <circle cx="15" cy="15" r="4"/>
-                                    <path
-                                        d="M19.999,3h-10C6.14,3,3,6.141,3,10.001v10C3,23.86,6.141,27,10.001,27h10C23.86,27,27,23.859,27,19.999v-10   C27,6.14,23.859,3,19.999,3z M15,21c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S18.309,21,15,21z M22,9c-0.552,0-1-0.448-1-1   c0-0.552,0.448-1,1-1s1,0.448,1,1C23,8.552,22.552,9,22,9z"/>
-                                </svg>
-                            </a>
-                            <a
-                                href="https://www.facebook.com/medinchina.me"
-                                className="text-first-500 transition-colors duration-300 hover:text-third-400"
-                            >
-                                <svg viewBox="0 0 24 24" fill="currentColor" className="h-5">
-                                    <path
-                                        d="M22,0H2C0.895,0,0,0.895,0,2v20c0,1.105,0.895,2,2,2h11v-9h-3v-4h3V8.413c0-3.1,1.893-4.788,4.659-4.788 c1.325,0,2.463,0.099,2.795,0.143v3.24l-1.918,0.001c-1.504,0-1.795,0.715-1.795,1.763V11h4.44l-1,4h-3.44v9H22c1.105,0,2-0.895,2-2 V2C24,0.895,23.105,0,22,0z"/>
-                                </svg>
-                            </a>
-                        </div>
-                        <p className="mt-4 text-sm dark:text-first-300 text-first-600"></p>
+                        <h5 className="dark:text-white">OBSHR</h5>
+
+                    </Link>
+
+                    <p className="max-w-md mx-auto mt-4 text-gray-500 dark:text-gray-400">Lorem ipsum dolor sit amet
+                        consectetur adipisicing elit.</p>
+
+                    <div className="flex flex-col mt-4 sm:flex-row sm:items-center sm:justify-center">
+                        <button
+                            className="flex items-center justify-center order-1 w-full px-2 py-2 mt-3 text-sm tracking-wide text-gray-600 capitalize transition-colors duration-300 transform border rounded-md sm:mx-2 dark:border-gray-400 dark:text-gray-300 sm:mt-0 sm:w-auto hover:bg-gray-50 focus:outline-none focus:ring dark:hover:bg-gray-800 focus:ring-gray-300 focus:ring-opacity-40">
+                            <svg className="w-5 h-5 mx-1" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C21.9939 17.5203 17.5203 21.9939 12 22ZM4 12.172C4.04732 16.5732 7.64111 20.1095 12.0425 20.086C16.444 20.0622 19.9995 16.4875 19.9995 12.086C19.9995 7.68451 16.444 4.10977 12.0425 4.086C7.64111 4.06246 4.04732 7.59876 4 12V12.172ZM10 16.5V7.5L16 12L10 16.5Z"
+                                    fill="currentColor"></path>
+                            </svg>
+
+                            <span className="mx-1">View Demo</span>
+                        </button>
+
+                        <button
+                            className="w-full px-5 py-2 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-red-600 rounded-md sm:mx-2 sm:order-2 sm:w-auto hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300 focus:ring-opacity-80">Get
+                            started
+                        </button>
                     </div>
                 </div>
-                <div className="flex flex-col-reverse justify-between pt-5 pb-10 border-t lg:flex-row">
-                    <p className="text-sm dark:text-first-300 text-first-600">
-                        Medinchina &copy; {2019} - {currentYear} All Rights Reserved.
+
+                <hr className="my-10 border-gray-200 dark:border-gray-700"/>
+
+                <div className="flex flex-col items-center sm:flex-row sm:justify-between">
+                    <p className="text-sm text-gray-500"> <span> <Link to="/" className="flex items-center">
+                        <h5 className="dark:text-white">OBSHR</h5>
+                    </Link>
+                    </span>&copy; {2019} - {currentYear} All Rights
+                        Reserved.
                     </p>
-                    <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row">
-                        <li>
-                            <a
-                                href="/public"
-                                className="text-sm dark:text-first-300 text-first-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
-                            >
-                                F.A.Q
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="/public"
-                                className="text-sm dark:text-first-300 text-first-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
-                            >
-                                Privacy Policy
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="/public"
-                                className="text-sm dark:text-first-300 text-first-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
-                            >
-                                Terms &amp; Conditions
-                            </a>
-                        </li>
-                    </ul>
+
+                    <div className="flex mt-3 -mx-2 sm:mt-0">
+                        <a href="#"
+                           className="mx-2 text-sm text-gray-500 transition-colors duration-300 hover:text-gray-500 dark:hover:text-gray-300"
+                           aria-label="Reddit"> Teams </a>
+
+                        <a href="#"
+                           className="mx-2 text-sm text-gray-500 transition-colors duration-300 hover:text-gray-500 dark:hover:text-gray-300"
+                           aria-label="Reddit"> Privacy </a>
+
+                        <a href="#"
+                           className="mx-2 text-sm text-gray-500 transition-colors duration-300 hover:text-gray-500 dark:hover:text-gray-300"
+                           aria-label="Reddit"> Cookies </a>
+                    </div>
                 </div>
             </div>
         </footer>

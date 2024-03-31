@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {deleteUser, getBookingsByUserId, getUser} from "../utils/ApiFunctions";
 import moment from "moment";
 
@@ -7,8 +7,10 @@ const Profile = () => {
     const [user, setUser] = useState({
         id: "",
         email: "",
+        useName: "",
         firstName: "",
         lastName: "",
+        phone: "",
         roles: [{id: "", name: ""}]
     })
 
@@ -75,132 +77,186 @@ const Profile = () => {
         }
     }
     return (
-        <div className="container">
-            {errorMessage && <p className="text-danger">{errorMessage}</p>}
-            {message && <p className="text-danger">{message}</p>}
+
+        <div className="max-w-2xl mx-auto bg-white p-16">
+            <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-300">Profile</h1>
+            <p className="text-gray-500 dark:text-gray-400">This is your profile </p>
+            <hr className="my-6 border-gray-200 dark:border-gray-700"/>
+            <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-300">Personal information</h2>
+                <button className="text-blue-600 hover:underline dark:text-blue-500"
+                        onClick={handleDeleteAccount}>Delete account
+                </button>
+            </div>
+
             {user ? (
-                <div className="card p-5 mt-5" style={{backgroundColor: "whitesmoke"}}>
-                    <h4 className="card-title text-center">User Information</h4>
-                    <div className="card-body">
-                        <div className="col-md-10 mx-auto">
-                            <div className="card mb-3 shadow">
-                                <div className="row g-0">
-                                    <div className="col-md-2">
-                                        <div className="d-flex justify-content-center align-items-center mb-4">
-                                            <img
-                                                src="https://themindfulaimanifesto.org/wp-content/uploads/2020/09/male-placeholder-image.jpeg"
-                                                alt="Profile"
-                                                className="rounded-circle"
-                                                style={{width: "150px", height: "150px", objectFit: "cover"}}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="col-md-10">
-                                        <div className="card-body">
-                                            <div className="form-group row">
-                                                <label className="col-md-2 col-form-label fw-bold">ID:</label>
-                                                <div className="col-md-10">
-                                                    <p className="card-text">{user.id}</p>
-                                                </div>
-                                            </div>
-                                            <hr/>
-
-                                            <div className="form-group row">
-                                                <label className="col-md-2 col-form-label fw-bold">First Name:</label>
-                                                <div className="col-md-10">
-                                                    <p className="card-text">{user.firstName}</p>
-                                                </div>
-                                            </div>
-                                            <hr/>
-
-                                            <div className="form-group row">
-                                                <label className="col-md-2 col-form-label fw-bold">Last Name:</label>
-                                                <div className="col-md-10">
-                                                    <p className="card-text">{user.lastName}</p>
-                                                </div>
-                                            </div>
-                                            <hr/>
-
-                                            <div className="form-group row">
-                                                <label className="col-md-2 col-form-label fw-bold">Email:</label>
-                                                <div className="col-md-10">
-                                                    <p className="card-text">{user.email}</p>
-                                                </div>
-                                            </div>
-                                            <hr/>
-
-                                            <div className="form-group row">
-                                                <label className="col-md-2 col-form-label fw-bold">Roles:</label>
-                                                <div className="col-md-10">
-                                                    <ul className="list-unstyled">
-                                                        {user.roles.map((role) => (
-                                                            <li key={role.id} className="card-text">
-                                                                {role.name}
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <h4 className="card-title text-center">Booking History</h4>
-
-                            {bookings.length > 0 ? (
-                                <table className="table table-bordered table-hover shadow">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">Booking ID</th>
-                                        <th scope="col">house ID</th>
-                                        <th scope="col">house Type</th>
-                                        <th scope="col">Check In Date</th>
-                                        <th scope="col">Check Out Date</th>
-                                        <th scope="col">Confirmation Code</th>
-                                        <th scope="col">Status</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {bookings.map((booking, index) => (
-                                        <tr key={index}>
-                                            <td>{booking.id}</td>
-                                            <td>{booking.house.id}</td>
-                                            <td>{booking.house.houseType}</td>
-                                            <td>
-                                                {moment(booking.checkInDate).subtract(1, "month").format("MMM Do, YYYY")}
-                                            </td>
-                                            <td>
-                                                {moment(booking.checkOutDate)
-                                                    .subtract(1, "month")
-                                                    .format("MMM Do, YYYY")}
-                                            </td>
-                                            <td>{booking.bookingConfirmationCode}</td>
-                                            <td className="text-success">On-going</td>
-                                        </tr>
-                                    ))}
-                                    </tbody>
-                                </table>
-                            ) : (
-                                <p>You have not made any bookings yet.</p>
-                            )}
-
-                            <div className="d-flex justify-content-center">
-                                <div className="mx-2">
-                                    <button className="btn btn-danger btn-sm" onClick={handleDeleteAccount}>
-                                        Close account
-                                    </button>
-                                </div>
-                            </div>
+                <div className="grid gap-6 mb-6 lg:grid-cols-2">
+                    <div>
+                        <label
+                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">First
+                            name</label>
+                        <input
+                            value={user.firstName}
+                            disabled={true}
+                            className="uppercase bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        />
+                    </div>
+                    <div>
+                        <label
+                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Last
+                            name</label>
+                        <input
+                            value={user.lastName}
+                            disabled={true}
+                            className="uppercase bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        />
+                    </div>
+                    <div>
+                        <label
+                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Username</label>
+                        <input
+                            value={user.useName}
+                            disabled={true}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        />
+                    </div>
+                    <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Phone
+                            number</label>
+                        <input value={user.phone}
+                               disabled={true}
+                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        />
+                    </div>
+                    <div>
+                        <label
+                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email </label>
+                        <input value={user.email}
+                               disabled={true}
+                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        />
+                    </div>
+                    <div>
+                        <label
+                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Role </label>
+                        <div
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <ul className={"list-none"}>{user.roles.map((role, index) => (
+                                <li key={role.id}>{role.name}</li>
+                            ))}
+                            </ul>
                         </div>
                     </div>
                 </div>
             ) : (
                 <p>Loading user data...</p>
             )}
+            <div>
+                {errorMessage &&
+                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                         role="alert">
+                        <strong className="font-bold">Error! </strong>
+                        <span className="block sm:inline">{errorMessage}</span>
+                    </div>}
+                {message && <p className="text-danger">{message}</p>}
+                <h2 className="mb-4 text-xl font-bold text-gray-700">Booking History</h2>
+                {bookings.length > 0 ? (
+                    <div
+                        className="align-middle inline-block min-w-full shadow overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
+                        <table className="min-w-full">
+                            <thead>
+                            <tr>
+                                <th className="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider"> Booking
+                                    ID
+                                </th>
+                                <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">House
+                                    ID
+                                </th>
+                                <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">House
+                                    Type
+                                </th>
+                                <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider"> Check
+                                    In Date
+
+                                </th>
+                                <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider"> Check
+                                    Out Date
+                                </th>
+                                <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider"> Confirmation
+                                    Code
+                                </th>
+                                <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
+                                    Status
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody className="bg-white">
+                            {bookings.map((booking, index) => (
+
+                                <tr key={index}>
+                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                                        <div className="flex items-center">
+                                            <div>
+                                                <div
+                                                    className="text-sm leading-5 text-gray-800">{booking.id}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+                                        <span
+                                            className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                        <span aria-hidden
+                                              className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                        <span className="relative text-xs">{booking.house.id}</span>
+                                    </span>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">{booking.house.houseType}</td>
+                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+                                        <span
+                                            className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                        <span aria-hidden
+                                              className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                        <span
+                                            className="relative text-xs">	{moment(booking.checkInDate).subtract(1, "month").format("MMM Do, YYYY")}</span>
+                                    </span>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+                                        <span
+                                            className="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                        <span aria-hidden
+                                              className="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+                                        <span className="relative text-xs">{moment(booking.checkOutDate)
+                                            .subtract(1, "month")
+                                            .format("MMM Do, YYYY")}</span>
+                                    </span>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
+                                        {booking.bookingConfirmationCode}
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+                                        <button
+                                            className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
+                                            on
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    </div>
+                ) : (
+                    <p>You have not made any bookings yet.</p>
+                )}
+                <div className="flex justify-start p-4">
+                    <div className="mx-2">
+                        <Link
+                            className="inline-block px-6 py-2 text-lg font-semibold text-green-600 transition duration-200 transform bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:bg-gray-300 hover:text-green-700"
+                            to={"/existing-Houses"}> Book House
+                        </Link>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
-
 export default Profile;

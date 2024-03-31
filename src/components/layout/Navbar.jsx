@@ -1,26 +1,25 @@
-import {useEffect} from "react";
-import {useState} from "react";
+import {useEffect, useState, useCallback, useMemo} from "react";
 import {Link, NavLink} from "react-router-dom";
-import {FaUserLarge} from "react-icons/fa6";
+import {FaUser} from "react-icons/fa";
 import Logout from "../auth/Logout";
-
 
 const Navbar = () => {
     const [hidden, setHidden] = useState(true);
     const [darkMode, setDarkMode] = useState(
         JSON.parse(localStorage.getItem("darkMode")) || false
     );
-    const [showDropdown, setShowDropdown] = useState(false); // New state variable for dropdown menu
+    const [showDropdown, setShowDropdown] = useState(false);
     const [showAccount, setShowAccount] = useState(false)
-    const handleAccountClick = () => {
-        setShowAccount(!showAccount)
-    }
     const isLoggedIn = localStorage.getItem("token")
     const userRole = localStorage.getItem("userRole")
 
-    const toggleDropdown = () => {
+    const handleAccountClick = useCallback(() => {
+        setShowAccount(!showAccount)
+    }, [showAccount]);
+
+    const toggleDropdown = useCallback(() => {
         setShowDropdown(!showDropdown);
-    };
+    }, [showDropdown]);
 
     useEffect(() => {
         localStorage.setItem("darkMode", JSON.stringify(darkMode));
@@ -32,11 +31,13 @@ const Navbar = () => {
         }
     }, [darkMode]);
 
-    const activeClass =
-        "text-base block py-2 pr-4 pl-3 text-white bg-second-700 rounded md:bg-transparent md:text-second-700 md:p-0 dark:text-white";
-    const inActiveClass =
-        "text-base block py-2 pr-4 pl-3 text-first-700 rounded hover:bg-first-100 md:hover:bg-transparent md:hover:text-second-700 md:p-0 md:dark:hover:text-white dark:text-first-400 dark:hover:bg-first-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-first-700";
+    const activeClass = useMemo(() =>
+            "text-base block py-2 pr-4 pl-3 text-white bg-second-700 rounded md:bg-transparent md:text-second-700 md:p-0 dark:text-white",
+        []);
 
+    const inActiveClass = useMemo(() =>
+            "text-base block py-2 pr-4 pl-3 text-first-700 rounded hover:bg-first-100 md:hover:bg-transparent md:hover:text-second-700 md:p-0 md:dark:hover:text-white dark:text-first-400 dark:hover:bg-first-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-first-700",
+        []);
     return (
         <header className="sticky z-20 top-0 ">
             <nav
@@ -57,7 +58,7 @@ const Navbar = () => {
                                         type="button"
                                         className="flex items-center p-2 mr-2 text-xs font-medium text-first-700 bg-white rounded-lg border border-first-200 toggle-dark-state-example hover:bg-first-100 hover:text-second-700 focus:z-10 focus:ring-2 focus:ring-first-300 dark:focus:ring-first-500 dark:bg-first-800 focus:outline-none dark:text-first-400 dark:border-first-600 dark:hover:text-white dark:hover:bg-first-700">
                                      <span className="">
-     <FaUserLarge className="h-4 w-5"/>
+     <FaUser className="h-4 w-5"/>
 
     </span>
                                 </button>
@@ -66,18 +67,13 @@ const Navbar = () => {
                                 {showDropdown && (
                                     <div
                                         className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
-                                        <Link to="/login"
-                                              className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${showAccount ? "show" : ""}`}
-                                        /> {isLoggedIn ? (
-                                        <Logout/>
-                                    ) : (
-                                        <Link to="/login"
-                                              onClick={handleAccountClick}
-                                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Login</Link>
-                                    )}
-                                        {/*<Link to="/profile"*/}
-                                        {/*      onClick={handleAccountClick}*/}
-                                        {/*      className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${showAccount ? "show" : ""}`}></Link>*/}
+                                        {isLoggedIn ? (
+                                            <Logout/>
+                                        ) : (
+                                            <Link to="/login"
+                                                  onClick={handleAccountClick}
+                                                  className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${showAccount ? "show" : ""}`}>Login</Link>
+                                        )}
                                     </div>
                                 )}
                             </div>

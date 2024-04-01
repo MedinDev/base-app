@@ -6,7 +6,7 @@ const Registration = () => {
     const [registration, setRegistration] = useState({
         firstName: "",
         lastName: "",
-        userName: "",
+        username: "",
         phone: "",
         email: "",
         password: "",
@@ -26,7 +26,7 @@ const Registration = () => {
             const result = await registerUser(registration)
             setSuccessMessage(result)
             setErrorMessage("")
-            setRegistration({firstName: "", lastName: "", email: "", password: "", phone: "", userName: ""})
+            setRegistration({firstName: "", lastName: "", email: "", password: "", phone: "", username: ""})
         } catch (error) {
             setSuccessMessage("")
             setErrorMessage(`Registration error : ${error.message}`)
@@ -111,12 +111,12 @@ const Registration = () => {
                                 </div>
 
                                 <div>
-                                    <label form="userName"
+                                    <label form="username"
                                            className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Username</label>
                                     <input type="text"
-                                           name="userName"
-                                           id="userName"
-                                           value={registration.userName}
+                                           name="username"
+                                           id="username"
+                                           value={registration.username}
                                            onChange={handleInputChange}
                                            placeholder="enter your username"
                                            className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-red-400 dark:focus:border-red-400 focus:ring-red-400 focus:outline-none focus:ring focus:ring-opacity-40"/>

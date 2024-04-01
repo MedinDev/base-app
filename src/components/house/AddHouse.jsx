@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {addHouse} from "../utils/ApiFunctions";
+import {Link} from "react-router-dom";
 import HouseTypeSelector from "../common/HouseTypeSelector";
 
 const AddHouse = () => {
@@ -16,8 +17,11 @@ const AddHouse = () => {
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleHouseInputChange = (e) => {
-        const {name, value} = e.target;
-        setNewHouse({...newHouse, [name]: value});
+        const {name, value, type} = e.target;
+        setNewHouse(prevState => ({
+            ...prevState,
+            [name]: type === 'number' ? parseFloat(value) || "" : value
+        }));
     };
 
     const handleImageChange = (e) => {
@@ -29,6 +33,7 @@ const AddHouse = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            const formData = new FormData();
             const success = await addHouse(
                 newHouse.photo,
                 newHouse.houseType,
@@ -40,189 +45,198 @@ const AddHouse = () => {
                 newHouse.houseAddress,
                 newHouse.houseYear,
                 newHouse.houseDescription);
+            Object.entries(newHouse).forEach(([key, value]) => {
+                formData.append(key, value instanceof File ? value : String(value));
+            });
             if (success) {
-                setSuccessMessage("A new house was added to the database");
+                setSuccessMessage("A new house was added to the database.");
                 setNewHouse({
-                    photo: null,
-                    houseType: "",
-                    housePrice: "",
-                    houseRoom: "",
-                    houseBathroom: "",
-                    houseSurface: "",
-                    houseCountry: "",
-                    houseAddress: "",
-                    houseYear: "",
-                    houseDescription: ""
+                    photo: null, houseType: "",
+                    housePrice: "", houseRoom: "",
+                    houseBathroom: "", houseSurface: "",
+                    houseCountry: "", houseAddress: "",
+                    houseYear: "", houseDescription: ""
                 });
                 setImagePreview("");
             } else {
-                setErrorMessage("Error adding house");
+                setErrorMessage("Error adding house. Please try again.");
             }
         } catch (error) {
-            setErrorMessage(error.message);
+            setErrorMessage(error.message || "An error occurred.");
         }
 
         setTimeout(() => {
-            if (successMessage) {
-                setSuccessMessage("");
-            }
-            if (errorMessage) {
-                setErrorMessage("");
-            }
+            setSuccessMessage("");
+            setErrorMessage("");
         }, 3000);
-
     };
+    console.log("Rendering HouseTypeSelector with houseTypes:", newHouse.houseType)
 
     return (
-        <section className="p-6 dark:bg-first-800 dark:text-gray-50">
-            {successMessage && (
-                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+        <section className="max-w-4xl p-6 mx-auto bg-indigo-600 rounded-md shadow-md dark:bg-gray-800 mt-20">
+            {errorMessage &&
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
                      role="alert">
-                    <span className="block sm:inline">{successMessage}</span>
-                    <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
-            <svg className="fill-current h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path fillRule="evenodd"
-                      d="M9.293 14.293a1 1 0 0 1-1.414 0l-4-4a1 1 0 1 1 1.414-1.414L9 11.586l6.293-6.293a1 1 0 1 1 1.414 1.414l-7 7a1 1 0 0 1-1.414 0z"/>
-            </svg>
-        </span>
-                </div>
-            )}
-            {errorMessage && (
-                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong className="font-bold">Error! </strong>
                     <span className="block sm:inline">{errorMessage}</span>
-                    <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
-            <svg className="fill-current h-6 w-6 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path fillRule="evenodd"
-                      d="M10 2a8 8 0 1 1 0 16a8 8 0 0 1 0-16zm1 13a1 1 0 1 1-2 0V9a1 1 0 1 1 2 0v6zm0-9a1 1 0 1 1-2 0V7a1 1 0 1 1 2 0V6z"/>
-            </svg>
-        </span>
+                </div>}
+            {successMessage && <div
+                className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                role="alert">
+                <strong className="font-bold">Success! </strong>
+                <span className="block sm:inline">{successMessage}</span>
+            </div>}
+            <h1 className="text-xl font-bold text-white capitalize dark:text-white">New House settings</h1>
+            <form onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                    <div className="text-white dark:text-gray-200">
+                        <label className="text-white dark:text-gray-200" form="houseType">House Type</label>
+                        <div
+                            className="block w-full text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                            <div>
+                                <HouseTypeSelector handleHouseInputChange={handleHouseInputChange}
+                                                   newHouse={newHouse}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label className="text-white dark:text-gray-200" form="housePrice">House Rent / Days</label>
+                        <input
+                            required
+                            type="number"
+                            id="housePrice"
+                            name="housePrice"
+                            value={newHouse.housePrice}
+                            onChange={handleHouseInputChange}
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"/>
+                    </div>
+
+                    <div>
+                        <label className="text-white dark:text-gray-200" form="houseRoom">Room </label>
+                        <input required
+                               type="number"
+                               id="houseRoom"
+                               name="houseRoom"
+                               value={newHouse.houseRoom}
+                               onChange={handleHouseInputChange}
+                               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"/>
+                    </div>
+
+                    <div>
+                        <label className="text-white dark:text-gray-200" form="houseBathroom">Bathroom</label>
+                        <input required
+                               type="number"
+                               id="houseBahtroom"
+                               name="houseBathroom"
+                               value={newHouse.houseBathroom}
+                               onChange={handleHouseInputChange}
+                               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"/>
+                    </div>
+
+                    <div>
+                        <label className="text-white dark:text-gray-200" form="houseSurface">Surface (m2)</label>
+                        <input required
+                               type="number"
+                               id="houseSurface"
+                               name="houseSurface"
+                               value={newHouse.houseSurface}
+                               onChange={handleHouseInputChange}
+                               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"/>
+                    </div>
+
+
+                    <div>
+                        <label className="text-white dark:text-gray-200" form="houseCountry">Country</label>
+                        <input required
+                               type="text"
+                               id="houseCountry"
+                               name="houseCountry"
+                               value={newHouse.houseCountry}
+                               onChange={handleHouseInputChange}
+                               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"/>
+                    </div>
+                    <div>
+                        <label className="text-white dark:text-gray-200" form="houseAddress">Address</label>
+                        <input required
+                               type="text"
+                               id="houseAddress"
+                               name="houseAddress"
+                               value={newHouse.houseAddress}
+                               onChange={handleHouseInputChange}
+                               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"/>
+                    </div>
+                    <div>
+                        <label className="text-white dark:text-gray-200" form="houseYear">Year of build </label>
+                        <input required
+                               type="date"
+                               id="houseYear"
+                               name="houseYear"
+                               value={newHouse.houseYear}
+                               onChange={handleHouseInputChange}
+                               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"/>
+                    </div>
+                    <div>
+                        <label className="text-white dark:text-gray-200" form="houseDescription">House
+                            description</label>
+                        <textarea required
+                                  type="textarea"
+                                  id="houseDescription"
+                                  name="houseDescription"
+                                  value={newHouse.houseDescription}
+                                  onChange={handleHouseInputChange}
+                                  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-white">
+                            Image
+                        </label>
+                        <div
+                            className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                            <div className="space-y-1 text-center">
+                                <svg className="mx-auto h-12 w-12 text-white" stroke="currentColor" fill="none"
+                                     viewBox="0 0 48 48" aria-hidden="true">
+                                    <path
+                                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                        strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                                <div className="flex text-sm text-gray-600">
+                                    <label form="file-upload"
+                                           className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                                        <span className="">Upload a file</span>
+                                        <input required
+                                               name="photo"
+                                               id="photo"
+                                               type="file"
+                                               onChange={handleImageChange} className="sr-only"/>
+                                    </label>
+
+                                    <p className="pl-1 text-white">or drag and drop</p>
+                                </div>
+                                <p className="text-xs text-white">
+                                    PNG, JPG, GIF up to 10MB
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {imagePreview && (
+                        <img src={imagePreview}
+                             alt="Preview house"
+                             style={{maxWidth: "400px", maxHeight: "400px"}}
+                             className="mb-3"></img>
+                    )}
                 </div>
-            )}
 
-            <form onSubmit={handleSubmit}
-                  className="container flex flex-col mx-auto space-y-12">
-                <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-first-900">
-                    <div className="space-y-2 col-span-full lg:col-span-1">
-                        <p className="font-medium">Add House</p>
-                        <p className="text-xs">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci fuga
-                            autem eum!</p>
-                    </div>
-                    <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-                        <div className="col-span-full sm:col-span-3">
-                            <label htmlFor="houseType" className="text-sm">House Type</label>
-                            <HouseTypeSelector
-                                handleHouseInputChange={handleHouseInputChange}
-                                newHouse={newHouse}
-                            />
-                        </div>
-                        <div className="col-span-full sm:col-span-3">
-                            <label htmlFor="housePrice" className="text-sm">Rent</label>
-                            <input required
-                                   name="housePrice"
-                                   type="number"
-                                   value={newHouse.housePrice}
-                                   onChange={handleHouseInputChange}
-                                   className="w-full rounded-md focus:ring focus:ri focus:ri border border-gray-300  dark:border-gray-700 dark:text-gray-900"/>
-                        </div>
-                        <div className="col-span-full sm:col-span-3">
-                            <label htmlFor="houseCountry" className="text-sm">Country</label>
-                            <input required
-                                   name="houseCountry"
-                                   type="text"
-                                   value={newHouse.houseCountry}
-                                   onChange={handleHouseInputChange}
-                                   className="w-full rounded-md focus:ring focus:ri focus:ri border border-gray-300 dark:border-gray-700 dark:text-gray-900"/>
-                        </div>
-                        <div className="col-span-full">
-                            <label htmlFor="houseAddress" className="text-sm">Address</label>
-                            <input required
-                                   name="houseAddress"
-                                   type="text"
-                                   value={newHouse.houseAddress}
-                                   onChange={handleHouseInputChange}
-                                   className="w-full rounded-md focus:ring focus:ri focus:ri  border border-gray-300 dark:border-gray-700 dark:text-gray-900"/>
-                        </div>
-                        <div className="col-span-full sm:col-span-2">
-                            <label htmlFor="houseRoom" className="text-sm">Room</label>
-                            <input required
-                                   name="houseRoom"
-                                   type="number"
-                                   value={newHouse.houseRoom}
-                                   onChange={handleHouseInputChange}
-                                   className="w-full rounded-md focus:ring focus:ri focus:ri border border-gray-300 dark:border-gray-700 dark:text-gray-900"/>
-                        </div>
-                        <div className="col-span-full sm:col-span-2">
-                            <label htmlFor="houseBathroom" className="text-sm">Bathroom</label>
-                            <input required
-                                   name="houseBathroom"
-                                   type="number"
-                                   value={newHouse.houseBathroom}
-                                   onChange={handleHouseInputChange}
-                                   className="w-full rounded-md focus:ring focus:ri focus:ri border border-gray-300 dark:border-gray-700 dark:text-gray-900"/>
-                        </div>
-                        <div className="col-span-full sm:col-span-2">
-                            <label htmlFor="houseSurface" className="text-sm">Surface</label>
-                            <input
-                                required
-                                name="houseSurface"
-                                type="number"
-                                value={newHouse.houseSurface}
-                                onChange={handleHouseInputChange}
-                                className="w-full rounded-md focus:ring focus:ri focus:ri border border-gray-300 dark:border-gray-700 dark:text-gray-900"/>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm  dark:bg-first-900">
-                    <div className="space-y-2 col-span-full lg:col-span-1">
-                        <p className="font-medium">Image</p>
-                        <p className="text-xs">Adipisci fuga autem eum!</p>
-                    </div>
-                    <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-                        <div className="col-span-full sm:col-span-3">
-                            <label className="text-sm">Year</label>
-                            <input required
-
-                                   name="houseYear"
-                                   type="date"
-                                   value={newHouse.houseYear}
-                                   onChange={handleHouseInputChange}
-                                   className="w-full rounded-md focus:ring focus:ring-indigo-500 border border-gray-300 dark:border-gray-700 dark:text-gray-900"/>
-                        </div>
-                        <div className="col-span-full sm:col-span-3">
-                            <label htmlFor="photo" className="text-sm">Upload Photo</label>
-                            <div className="relative border-dashed border-2 border-gray-300 rounded-md">
-                                <input
-                                    required
-                                    id="photo"
-                                    name="photo"
-                                    type="file"
-                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                    onChange={handleImageChange}
-                                />
-                                {newHouse.photo && <p className="mt-2">Selected Photo: {newHouse.photo.name}</p>}
-                                {imagePreview &&
-                                    <img src={imagePreview} alt="Preview House" className="mt-2 rounded-md"/>
-                                }
-                            </div>
-                        </div>
-                        <div className="col-span-full">
-                            <label htmlFor="houseDescription" className="text-sm">Description</label>
-                            <textarea required
-
-                                      name="houseDescription"
-                                      value={newHouse.houseDescription}
-                                      onChange={handleHouseInputChange}
-                                      className="w-full rounded-md focus:ring focus:ring-indigo-500 border border-gray-300 dark:border-gray-700 dark:text-gray-900"></textarea>
-                        </div>
-                        <div className="col-span-full">
-                            <div className="flex items-center space-x-2">
-                                <button type="submit"
-                                        className="px-4 py-2 border rounded-md border-gray-300 dark:border-gray-100">Submit
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
+                <div className="flex gap-4 justify-end mt-6">
+                    <button
+                        className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-red-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600">Save
+                    </button>
+                    <Link
+                        className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-first-950-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600"
+                        to={"/existing-Houses"}>Existing
+                        house
+                    </Link>
+                </div>
             </form>
         </section>
     );

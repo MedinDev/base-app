@@ -26,9 +26,7 @@ export async function addHouse(photo, houseType, housePrice, houseRoom, houseBat
     formData.append("houseYear", houseYear)
     formData.append("houseDescription", houseDescription)
 
-    const response = await api.post("/houses/add/new-house", formData, {
-        headers: getHeader()
-    })
+    const response = await api.post("/houses/add/new-house", formData)
     if (response.status === 201) {
         return true
     } else {

@@ -10,7 +10,7 @@ const Navbar = () => {
     );
     const [showDropdown, setShowDropdown] = useState(false);
     const [showAccount, setShowAccount] = useState(false)
-    const isLoggedIn = localStorage.getItem("token")
+    const isLoggedIn = localStorage.getItem("token") !== null;
     const userRole = localStorage.getItem("userRole")
 
     const handleAccountClick = useCallback(() => {

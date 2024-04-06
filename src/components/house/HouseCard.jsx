@@ -1,29 +1,30 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
+
 const HouseCard = ({house}) => {
     return (
-        <div key={house.id} className="mb-4">
-            <div className="bg-white shadow-md rounded-md overflow-hidden">
-                <div className="p-4 flex items-center">
-                    <div className="mr-3">
-                        <Link to={`/book-room/${house.id}`}>
+        <div key={house.id} className="mb-4" xs={12}>
+            <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+                <div className="px-4 py-5 sm:px-6 flex flex-wrap items-center">
+                    <div className="flex-shrink-0 mr-3 mb-3 mb-md-0">
+                        <Link to={`/book-house/${house.id}`}>
                             <img
-                                className="w-full h-auto"
+                                className="w-full max-w-xs h-auto"
                                 src={`data:image/png;base64, ${house.photo}`}
-                                alt="house Photo"
+                                alt="House"
                             />
                         </Link>
                     </div>
-                    <div className="flex-grow">
-                        <h3 className="text-lg font-semibold text-gray-800">{house.houseType}</h3>
-                        <p className="text-sm text-gray-600">{house.housePrice} / night</p>
-                        <p className="text-sm text-gray-700">Some room information goes here for the guest to read
+                    <div className="flex-grow ml-3 px-5">
+                        <h3 className="text-lg leading-6 font-medium text-gray-900">{house.houseType}</h3>
+                        <p className="mt-1 max-w-2xl text-sm text-gray-500">{house.housePrice} / night</p>
+                        <p className="mt-1 text-sm text-gray-500">Some house information goes here for the guest to read
                             through</p>
                     </div>
-                    <div className="ml-auto">
+                    <div className="flex-shrink-0 mt-3">
                         <Link to={`/book-house/${house.id}`}
-                              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md">
+                              className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150">
                             Book Now
                         </Link>
                     </div>

@@ -3,6 +3,7 @@ import About from "./About";
 import Hero from "./Hero";
 import PopularAreas from "./PopularAreas";
 import {useLocation} from "react-router-dom";
+import HouseCarousel from "../house/HouseCarousel";
 
 const Home = () => {
     const location = useLocation()
@@ -15,8 +16,10 @@ const Home = () => {
                 <h6 className="text-success text-center"> You are logged-In as {currentUser}</h6>
             )}
             <Hero/>
+            <HouseCarousel/>
             <About/>
             <PopularAreas/>
+            <HouseCarousel/>
         </div>
     );
 };

@@ -27,11 +27,15 @@ const DateSlider = ({onDateChange, onFilterChange}) => {
     }
     return (
         <>
-            <h5>Filter bookings by date</h5>
-            <DateRangePicker ranges={[dateRange]} onChange={handleSelect} className="mb-4"/>
-            <button className="btn btn-secondary" onClick={handleClearFilter}>
-                Clear Filter
-            </button>
+            <div>
+                <h5 className="mb-2">Filter bookings by date</h5>
+                <DateRangePicker ranges={[dateRange]} onChange={handleSelect} className="mb-4"/>
+                <button className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={handleClearFilter}>
+                    Clear Filter
+                </button>
+            </div>
+
         </>
     )
 }

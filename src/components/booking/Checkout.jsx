@@ -30,9 +30,9 @@ const Checkout = () => {
     }, [houseId])
     return (
         <div>
-            <section className="container">
-                <div className="row">
-                    <div className="col-md-4 mt-5 mb-5">
+            <section className="container mx-auto">
+                <div className="flex flex-wrap -mx-3">
+                    <div className="w-full md:w-1/3 px-3 mt-5 mb-5">
                         {isLoading ? (
                             <p>Loading room information...</p>
                         ) : error ? (
@@ -41,43 +41,43 @@ const Checkout = () => {
                             <div className="room-info">
                                 <img
                                     src={`data:image/png;base64,${houseInfo.photo}`}
-                                    alt="Room photo"
-                                    style={{width: "100%", height: "200px"}}
+                                    alt="house"
+                                    className="w-full h-48 object-cover" // Adjust 'h-48' as needed to match your design
                                 />
-                                <table className="table table-bordered">
+                                <table className="table-auto w-full border-collapse border border-gray-200 mt-4">
                                     <tbody>
                                     <tr>
-                                        <th>House Type:</th>
-                                        <td>{houseInfo.houseType}</td>
+                                        <th className="border border-gray-200 px-4 py-2 text-left">House Type:</th>
+                                        <td className="border border-gray-200 px-4 py-2">{houseInfo.houseType}</td>
                                     </tr>
                                     <tr>
-                                        <th>Price per night:</th>
-                                        <td>${houseInfo.housePrice}</td>
+                                        <th className="border border-gray-200 px-4 py-2 text-left">Price per night:</th>
+                                        <td className="border border-gray-200 px-4 py-2">${houseInfo.housePrice}</td>
                                     </tr>
                                     <tr>
-                                        <th>House Service:</th>
-                                        <td>
-                                            <ul className="list-unstyled">
-                                                <li>
-                                                    <FaWifi/> Wifi
+                                        <th className="border border-gray-200 px-4 py-2 text-left">House Service:</th>
+                                        <td className="border border-gray-200 px-4 py-2">
+                                            <ul className="list-none p-0">
+                                                <li className="flex items-center">
+                                                    <FaWifi className="mr-2"/> Wifi
                                                 </li>
-                                                <li>
-                                                    <FaTv/> Netflix Premium
+                                                <li className="flex items-center">
+                                                    <FaTv className="mr-2"/> Netflix Premium
                                                 </li>
-                                                <li>
-                                                    <FaUtensils/> Breakfast
+                                                <li className="flex items-center">
+                                                    <FaUtensils className="mr-2"/> Breakfast
                                                 </li>
-                                                <li>
-                                                    <FaWineGlassAlt/> Mini bar refreshment
+                                                <li className="flex items-center">
+                                                    <FaWineGlassAlt className="mr-2"/> Mini bar refreshment
                                                 </li>
-                                                <li>
-                                                    <FaCar/> Car Service
+                                                <li className="flex items-center">
+                                                    <FaCar className="mr-2"/> Car Service
                                                 </li>
-                                                <li>
-                                                    <FaParking/> Parking Space
+                                                <li className="flex items-center">
+                                                    <FaParking className="mr-2"/> Parking Space
                                                 </li>
-                                                <li>
-                                                    <FaTshirt/> Laundry
+                                                <li className="flex items-center">
+                                                    <FaTshirt className="mr-2"/> Laundry
                                                 </li>
                                             </ul>
                                         </td>
@@ -87,13 +87,13 @@ const Checkout = () => {
                             </div>
                         )}
                     </div>
-                    <div className="col-md-8">
+                    <div className="w-full md:w-2/3 px-3">
                         <BookingForm/>
                     </div>
                 </div>
             </section>
-
         </div>
+
     );
 };
 

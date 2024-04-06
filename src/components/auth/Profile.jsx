@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
-import {deleteUser, getBookingsByUserId, getUser} from "../utils/ApiFunctions";
+import {deleteUser, getBookingsByUserId, getUser, updateUserRole} from "../utils/ApiFunctions";
 import moment from "moment";
 
 const Profile = () => {
     const [user, setUser] = useState({
         id: "",
         email: "",
-        usename: "",
+        username: "",
         firstName: "",
         lastName: "",
         phone: "",
@@ -29,6 +29,12 @@ const Profile = () => {
 
     const userId = localStorage.getItem("userId")
     const token = localStorage.getItem("token")
+
+    const [newRole, setNewRole] = useState("");
+    const handleRoleChange = (event) => {
+        setNewRole(event.target.value);
+    };
+
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -76,6 +82,29 @@ const Profile = () => {
                 })
         }
     }
+
+    const handleUpdateRole = async () => {
+        if (newRole) {
+            try {
+                await updateUserRole(userId, newRole);
+                alert("Role updated successfully.");
+                // Refresh the user data to reflect the change
+                const updatedUserData = await getUser(userId, token);
+                setUser(updatedUserData);
+            } catch (error) {
+                console.error("Error updating role:", error.message);
+                setErrorMessage(error.message);
+            }
+        } else {
+            alert("Please select a role.");
+        }
+    };
+    const roles = [
+        {id: "1", name: "ROLE_USER"},
+        {id: "2", name: "ROLE_OWNER"},
+        // Add more roles as needed
+    ];
+
     return (
 
         <div className="max-w-2xl mx-auto bg-white p-16">
@@ -115,7 +144,7 @@ const Profile = () => {
                         <label
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Username</label>
                         <input
-                            value={user.usename}
+                            value={user.username}
                             disabled={true}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         />
@@ -152,6 +181,20 @@ const Profile = () => {
                 <p>Loading user data...</p>
             )}
             <div>
+                <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Change
+                        Role</label>
+                    <select onChange={handleRoleChange} value={newRole}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="">Select a role</option>
+                        {roles.map((role) => (
+                            <option key={role.id} value={role.name}>{role.name}</option>
+                        ))}
+                    </select>
+                    <button onClick={handleUpdateRole}
+                            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Update Role
+                    </button>
+                </div>
                 {errorMessage &&
                     <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
                          role="alert">

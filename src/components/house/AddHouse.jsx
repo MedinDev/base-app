@@ -11,7 +11,6 @@ const AddHouse = () => {
         houseCountry: "", houseAddress: "",
         houseYear: "", houseDescription: ""
     });
-
     const [imagePreview, setImagePreview] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -49,19 +48,27 @@ const AddHouse = () => {
                 formData.append(key, value instanceof File ? value : String(value));
             });
             if (success) {
+                console.log("House added successfully");
                 setSuccessMessage("A new house was added to the database.");
                 setNewHouse({
-                    photo: null, houseType: "",
-                    housePrice: "", houseRoom: "",
-                    houseBathroom: "", houseSurface: "",
-                    houseCountry: "", houseAddress: "",
-                    houseYear: "", houseDescription: ""
+                    photo: null,
+                    houseType: "",
+                    housePrice: "",
+                    houseRoom: "",
+                    houseBathroom: "",
+                    houseSurface: "",
+                    houseCountry: "",
+                    houseAddress: "",
+                    houseYear: "",
+                    houseDescription: ""
                 });
                 setImagePreview("");
             } else {
+                console.log("Error adding house: success flag was false");
                 setErrorMessage("Error adding house. Please try again.");
             }
         } catch (error) {
+            console.log("Error adding house: exception thrown", error);
             setErrorMessage(error.message || "An error occurred.");
         }
 

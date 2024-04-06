@@ -1,5 +1,5 @@
 import Navbar from "./components/layout/Navbar";
-import {Route, Router, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Home from "./components/home/Home";
 import EditHouse from "./components/house/EditHouse";
 import AddHouse from "./components/house/AddHouse";
@@ -10,7 +10,6 @@ import Checkout from "./components/booking/Checkout";
 import BookingSuccess from "./components/booking/BookingSuccess";
 import Bookings from "./components/booking/Bookings";
 import FindBooking from "./components/booking/FindBooking";
-import Footer from "./components/layout/Footer";
 import {AuthProvider} from "./components/auth/AuthProvider";
 import RequireAuth from "./components/auth/RequireAuth";
 import Login from "./components/auth/Login";
@@ -35,11 +34,10 @@ function App() {
                     <Route path={"/find-bookings"} element={<FindBooking/>}/>
                     <Route path={"/login"} element={<Login/>}/>
                     <Route path="/register" element={<Registration/>}/>
-
                     <Route path="/profile" element={<Profile/>}/>
 
                 </Routes>
-                <Footer/>
+                {/*<Footer/>*/}
             </main>
         </AuthProvider>
     );

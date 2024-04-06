@@ -148,7 +148,7 @@ const Registration = () => {
                                 <div className="mt-6">
                                     <div className="flex justify-between mb-2">
                                         <label form="password"
-                                               className="text-sm text-gray-600 dark:text-gray-200">Password</label>
+                                               className="text-sm text-gray-600 dark:text-gray-200">ForgotPassword</label>
                                     </div>
 
                                     <input type="password"
@@ -156,7 +156,7 @@ const Registration = () => {
                                            id="password"
                                            value={registration.password}
                                            onChange={handleInputChange}
-                                           placeholder="Your Password"
+                                           placeholder="Your ForgotPassword"
                                            className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-red-400 dark:focus:border-red-400 focus:ring-red-400 focus:outline-none focus:ring focus:ring-opacity-40"/>
                                 </div>
 

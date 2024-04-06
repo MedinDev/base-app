@@ -31,11 +31,13 @@ const Bookings = () => {
             setError(error.message)
         }
     }
-    return (<section style={{backgroundColor: "whitesmoke"}}>
+
+    return (
+        <section className="bg-gray-200">
             <Header title={"Existing Bookings"}/>
-            {error && <div className="text-danger">{error}</div>}
+            {error && <div className="text-red-500">{error}</div>}
             {isLoading ? (
-                <div>Loading existing bookings</div>
+                <div>Loading existing bookings...</div>
             ) : (
                 <BookingsTable
                     bookingInfo={bookingInfo}
@@ -43,6 +45,7 @@ const Bookings = () => {
                 />
             )}
         </section>
+
     );
 };
 

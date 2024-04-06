@@ -131,3 +131,8 @@ export async function updateUserRole(userId, newRole) {
     });
     return response.data;
 }
+
+export async function resetPassword(resetPasswordRequest) {
+    const response = await api.post("/users/reset-password", resetPasswordRequest);
+    return response.data;
+}

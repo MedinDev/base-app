@@ -14,11 +14,11 @@ const FindBooking = () => {
         roomNumber: "",
         checkInDate: "",
         checkOutDate: "",
-        guestName: "",
-        guestEmail: "",
+        guestFullName: "",
+        getGuestEmail: "",
         numOfAdults: "",
         numOfChildren: "",
-        totalNumOfGuests: ""
+        totalNumOfGuest: ""
     })
 
     const emptyBookingInfo = {
@@ -28,11 +28,11 @@ const FindBooking = () => {
         roomNumber: "",
         checkInDate: "",
         checkOutDate: "",
-        guestName: "",
-        guestEmail: "",
+        guestFullName: "",
+        getGuestEmail: "",
         numOfAdults: "",
         numOfChildren: "",
-        totalNumOfGuests: ""
+        totalNumOfGuest: ""
     }
     const [isDeleted, setIsDeleted] = useState(false)
 
@@ -78,12 +78,12 @@ const FindBooking = () => {
     }
     return (
         <>
-            <div className="container mt-5 d-flex flex-column justify-content-center align-items-center">
+            <div className="container mx-auto mt-5 flex flex-col items-center justify-center">
                 <h2 className="text-center mb-4">Find My Booking</h2>
-                <form onSubmit={handleFormSubmit} className="col-md-6">
-                    <div className="input-group mb-3">
+                <form onSubmit={handleFormSubmit} className="w-full md:w-1/2">
+                    <div className="flex mb-3">
                         <input
-                            className="form-control"
+                            className="form-input flex-1 rounded-l-md border p-2"
                             type="text"
                             id="confirmationCode"
                             name="confirmationCode"
@@ -92,7 +92,8 @@ const FindBooking = () => {
                             placeholder="Enter the booking confirmation code"
                         />
 
-                        <button type="submit" className="btn btn-hotel input-group-text">
+                        <button type="submit"
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-md">
                             Find booking
                         </button>
                     </div>
@@ -101,11 +102,11 @@ const FindBooking = () => {
                 {isLoading ? (
                     <div>Finding your booking...</div>
                 ) : error ? (
-                    <div className="text-danger">Error: {error}</div>
+                    <div className="text-red-500">Error: {error}</div>
                 ) : bookingInfo.bookingConfirmationCode ? (
-                    <div className="col-md-6 mt-4 mb-5">
+                    <div className="w-full md:w-1/2 mt-4 mb-5">
                         <h3>Booking Information</h3>
-                        <p className="text-success">Confirmation Code: {bookingInfo.bookingConfirmationCode}</p>
+                        <p className="text-green-500">Confirmation Code: {bookingInfo.bookingConfirmationCode}</p>
                         <p>House Number: {bookingInfo.house.id}</p>
                         <p>House Type: {bookingInfo.house.houseType}</p>
                         <p>
@@ -116,16 +117,16 @@ const FindBooking = () => {
                             Check-out Date:{" "}
                             {moment(bookingInfo.checkInDate).subtract(1, "month").format("MMM Do, YYYY")}
                         </p>
-                        <p>Full Name: {bookingInfo.guestName}</p>
-                        <p>Email Address: {bookingInfo.guestEmail}</p>
+                        <p>Full Name: {bookingInfo.guestFullName}</p>
+                        <p>Email Address: {bookingInfo.getGuestEmail}</p>
                         <p>Adults: {bookingInfo.numOfAdults}</p>
                         <p>Children: {bookingInfo.numOfChildren}</p>
-                        <p>Total Guest: {bookingInfo.totalNumOfGuests}</p>
+                        <p>Total Guest: {bookingInfo.totalNumOfGuest}</p>
 
                         {!isDeleted && (
                             <button
                                 onClick={() => handleBookingCancellation(bookingInfo.id)}
-                                className="btn btn-danger">
+                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md mt-3">
                                 Cancel Booking
                             </button>
                         )}
@@ -134,9 +135,12 @@ const FindBooking = () => {
                     <div>find booking...</div>
                 )}
 
-                {isDeleted && <div className="alert alert-success mt-3 fade show">{successMessage}</div>}
+                {isDeleted &&
+                    <div className="mt-3 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                         role="alert">{successMessage}</div>}
             </div>
         </>
+
     );
 };
 

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {getHouseById, updateHouse} from "../utils/ApiFunctions";
-import {Link, useParams} from "react-router-dom";
+import {Link, useParams, useNavigate} from "react-router-dom";
 
 const EditHouse = () => {
     const [house, setHouse] = useState({
@@ -14,11 +14,11 @@ const EditHouse = () => {
         houseAddress: "",
         houseYear: "",
         houseDescription: ""
-    })
-
+    });
     const [imagePreview, setImagePreview] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
+    const navigate = useNavigate()
     const {houseId} = useParams()
 
     const handleImageChange = (e) => {
@@ -32,7 +32,6 @@ const EditHouse = () => {
         setHouse({...house, [name]: value})
     }
 
-
     useEffect(() => {
         const fetchHouse = async () => {
             try {
@@ -40,50 +39,56 @@ const EditHouse = () => {
                 setHouse(houseData)
                 setImagePreview(houseData.photo)
             } catch (error) {
-                setErrorMessage(error.message)
+                console.error(error)
             }
         }
+
         fetchHouse()
-    }, [houseId]);
+    }, [houseId])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
         try {
             const response = await updateHouse(houseId, house)
             if (response.status === 200) {
-                setSuccessMessage("House update successfully")
+                setSuccessMessage("House updated successfully!")
                 const updatedHouseData = await getHouseById(houseId)
                 setHouse(updatedHouseData)
                 setImagePreview(updatedHouseData.photo)
                 setErrorMessage("")
+                setTimeout(() => {
+                    navigate("/existing-houses")
+                }, 2000)
             } else {
-                setErrorMessage("Error updating house")
+                setErrorMessage("Error updating house! Please try again.")
             }
         } catch (error) {
-            setErrorMessage(error.message)
+            console.error(error)
             setErrorMessage(error.message)
         }
     }
 
     return (
         <section className="max-w-4xl p-6 mx-auto bg-indigo-600 rounded-md shadow-md dark:bg-gray-800 mt-20">
-            {errorMessage &&
-                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-                     role="alert">
+            {errorMessage && (
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
                     <strong className="font-bold">Error! </strong>
                     <span className="block sm:inline">{errorMessage}</span>
-                </div>}
-            {successMessage && <div
-                className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
-                role="alert">
-                <strong className="font-bold">Success! </strong>
-                <span className="block sm:inline">{successMessage}</span>
-            </div>}
-            <h1 className="text-xl font-bold text-white capitalize dark:text-white">Edit House details</h1>
+                </div>
+            )}
+            {successMessage && (
+                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                     role="alert">
+                    <strong className="font-bold">Success! </strong>
+                    <span className="block sm:inline">{successMessage}</span>
+                </div>
+            )}
+            <h1 className="text-xl font-bold text-white capitalize dark:text-white">Edit House Details</h1>
             <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                     <div>
-                        <label className="text-white dark:text-gray-200" form="houseType">House Type</label>
+                        <label className="text-white dark:text-gray-200" htmlFor="houseType">House Type</label>
                         <input
                             required
                             type="text"
@@ -198,38 +203,32 @@ const EditHouse = () => {
                                     <label form="file-upload"
                                            className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                                         <span className="">Upload a file</span>
-                                        <input required
-                                               name="photo"
-                                               id="photo"
-                                               type="file"
-                                               onChange={handleImageChange} className="sr-only"/>
+                                        <input
+                                            name="photo"
+                                            type="file"
+                                            onChange={handleImageChange}
+                                            className="sr-only"
+                                        />
+                                        {imagePreview && (
+                                            <img src={imagePreview} alt="Preview"
+                                                 style={{maxWidth: "400px", maxHeight: "400px"}}/>
+                                        )}
                                     </label>
-
-                                    <p className="pl-1 text-white">or drag and drop</p>
                                 </div>
-                                <p className="text-xs text-white">
-                                    PNG, JPG, GIF up to 10MB
-                                </p>
                             </div>
                         </div>
-                    </div>
-                    {imagePreview && (
-                        <img src={imagePreview}
-                             alt="Preview house"
-                             style={{maxWidth: "400px", maxHeight: "400px"}}
-                             className="mb-3"></img>
-                    )}
-                </div>
 
-                <div className="flex justify-end mt-6">
-                    <button
-                        className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-red-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600"> Edit
-                        Home
-                    </button>
-                    <Link
-                        className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-first-950-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600"
-                        to={"/existing-houses"}> Back
-                    </Link>
+                        <div className="flex justify-end mt-6">
+                            <button type="submit"
+                                    className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-red-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600">
+                                Edit Home
+                            </button>
+                            <Link to={"/existing-houses"}
+                                  className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-first-950-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600 ml-4">
+                                Back
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </form>
         </section>

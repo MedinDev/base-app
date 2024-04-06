@@ -31,7 +31,7 @@ const ExistingHouses = () => {
         houseAddress: "",
         houseYear: ""
     }])
-    const [selectedHouseType, setSelectedHouseType] = useState("")
+    const [selectedHouseType] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
 
@@ -50,6 +50,7 @@ const ExistingHouses = () => {
             setIsLoading(false)
         }
     }
+
 
     useEffect(() => {
         if (selectedHouseType === "") {
@@ -157,7 +158,7 @@ const ExistingHouses = () => {
                                 <HouseFilter data={houses} setFilteredData={setFilteredHouses}/>
                             </div>
                             <div className="flex flex-row-reverse flex-wrap m-auto justify-items-end">
-                                <Link to={"/add-room"}
+                                <Link to={"/add-house"}
                                       className=" flex gap-2 rounded p-1 bg-blue-800 border-blue-900 text-white ">
                                     <FaPlus/> Add House
                                 </Link>
@@ -199,7 +200,7 @@ const ExistingHouses = () => {
                                             className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                         <span aria-hidden
                                               className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                        <span className="relative text-xs">{house.housePrice}</span>
+                                        <span className="relative text-xs">${house.housePrice}</span>
                                     </span>
                                         </td>
 
@@ -225,7 +226,7 @@ const ExistingHouses = () => {
                                             className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                         <span aria-hidden
                                               className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                        <span className="relative text-xs">{house.houseSurface}</span>
+                                        <span className="relative text-xs">{house.houseSurface} sqf</span>
                                     </span>
                                         </td>
 

@@ -4,16 +4,12 @@ import Chart from 'chart.js/auto';
 const Admin = () => {
     const [isSideNavVisible] = useState(false);
 
-    // const toggleSideNav = () => {
-    //     setSideNavVisibility(!isSideNavVisible);
-    // };
-
     const initializeCharts = () => {
 
         new Chart(document.getElementById('usersChart'), {
             type: 'doughnut',
             data: {
-                labels: ['Nuevos', 'Registrados'],
+                labels: ['New', 'Registered'],
                 datasets: [{
                     data: [30, 65],
                     backgroundColor: ['#00F0FF', '#8B8B8D'],
@@ -32,7 +28,7 @@ const Admin = () => {
         new Chart(document.getElementById('commercesChart'), {
             type: 'doughnut',
             data: {
-                labels: ['Nuevos', 'Registrados'],
+                labels: ['New', 'Registered'],
                 datasets: [{
                     data: [60, 40],
                     backgroundColor: ['#FEC500', '#8B8B8D'],
@@ -61,7 +57,7 @@ const Admin = () => {
                     <nav>
                         <a className="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white"
                            href="/">
-                            <i className="fas fa-home mr-2"></i>Inicio
+                            <i className="fas fa-home mr-2"></i>Real Estate
                         </a>
                         <a className="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white"
                            href="/">
@@ -82,7 +78,7 @@ const Admin = () => {
                     </nav>
                     <a className="block text-gray-500 py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white mt-auto"
                        href="/">
-                        <i className="fas fa-sign-out-alt mr-2"></i>Cerrar sesión
+                        <i className="fas fa-sign-out-alt mr-2"></i>Theme
                     </a>
                     <div className="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mt-2"></div>
                     <p className="mb-1 px-5 py-3 text-left text-xs text-cyan-500">Copyright WCSLAT@2023</p>
@@ -123,9 +119,13 @@ const Admin = () => {
                         <table className="w-full table-auto text-sm">
                             <thead>
                             <tr className="text-sm leading-normal">
-                                <th className="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Foto</th>
-                                <th className="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Nombre</th>
-                                <th className="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Rol</th>
+                                <th className="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Images</th>
+                                <th className="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">booking
+                                    Number
+                                </th>
+                                <th className="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Check-in</th>
+                                <th className="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Check-out</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -134,7 +134,9 @@ const Admin = () => {
                                     src="https://via.placeholder.com/40" alt="Foto Perfil"
                                     className="rounded-full h-10 w-10"/></td>
                                 <td className="py-2 px-4 border-b border-grey-light">Juan Pérez</td>
-                                <td className="py-2 px-4 border-b border-grey-light">Comercio</td>
+                                <td className="py-2 px-4 border-b border-grey-light">12/06/2023</td>
+                                <td className="py-2 px-4 border-b border-grey-light">19/06/2024</td>
+
                             </tr>
                             {/* More rows */}
                             </tbody>

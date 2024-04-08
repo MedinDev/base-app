@@ -14,40 +14,37 @@ const AddHouse = () => {
     const [imagePreview, setImagePreview] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const today = new Date().toISOString().split('T')[0];
 
     const handleHouseInputChange = (e) => {
-        const {name, value, type} = e.target;
-        setNewHouse(prevState => ({
-            ...prevState,
-            [name]: type === 'number' ? parseFloat(value) || "" : value
-        }));
-    };
+        const name = e.target.name
+        let value = e.target.value
+        if (name === "roomPrice") {
+            if (!isNaN(value)) {
+                value = parseInt(value)
+            } else {
+                value = ""
+            }
+        }
+        setNewHouse({...newHouse, [name]: value})
+    }
 
     const handleImageChange = (e) => {
-        const selectedImage = e.target.files[0];
-        setNewHouse({...newHouse, photo: selectedImage});
-        setImagePreview(URL.createObjectURL(selectedImage));
-    };
+        const selectedImage = e.target.files[0]
+        setNewHouse({...newHouse, photo: selectedImage})
+        setImagePreview(URL.createObjectURL(selectedImage))
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const formData = new FormData();
-            const success = await addHouse(
-                newHouse.photo,
-                newHouse.houseType,
-                newHouse.housePrice,
-                newHouse.houseRoom,
-                newHouse.houseBathroom,
-                newHouse.houseSurface,
-                newHouse.houseCountry,
-                newHouse.houseAddress,
-                newHouse.houseYear,
+            const success = await addHouse(newHouse.photo,
+                newHouse.houseType, newHouse.housePrice,
+                newHouse.houseRoom, newHouse.houseBathroom,
+                newHouse.houseSurface, newHouse.houseCountry,
+                newHouse.houseAddress, newHouse.houseYear,
                 newHouse.houseDescription);
-            Object.entries(newHouse).forEach(([key, value]) => {
-                formData.append(key, value instanceof File ? value : String(value));
-            });
-            if (success) {
+            if (success !== undefined) {
                 console.log("House added successfully");
                 setSuccessMessage("A new house was added to the database.");
                 setNewHouse({
@@ -63,13 +60,14 @@ const AddHouse = () => {
                     houseDescription: ""
                 });
                 setImagePreview("");
+                setErrorMessage("")
             } else {
                 console.log("Error adding house: success flag was false");
                 setErrorMessage("Error adding house. Please try again.");
             }
         } catch (error) {
             console.log("Error adding house: exception thrown", error);
-            setErrorMessage(error.message || "An error occurred.");
+            setErrorMessage(error.message);
         }
 
         setTimeout(() => {
@@ -78,7 +76,6 @@ const AddHouse = () => {
         }, 3000);
     };
     console.log("Rendering HouseTypeSelector with houseTypes:", newHouse.houseType)
-
     return (
         <section className="max-w-4xl p-6 mx-auto bg-indigo-600 rounded-md shadow-md dark:bg-gray-800 mt-20">
             {errorMessage &&
@@ -180,6 +177,7 @@ const AddHouse = () => {
                                name="houseYear"
                                value={newHouse.houseYear}
                                onChange={handleHouseInputChange}
+                               max={today}
                                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"/>
                     </div>
                     <div>

@@ -21,11 +21,13 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="4">
+          <list size="6">
             <item index="0" class="java.lang.String" itemvalue="alt" />
             <item index="1" class="java.lang.String" itemvalue="v-on:click.prevent" />
             <item index="2" class="java.lang.String" itemvalue="validated" />
             <item index="3" class="java.lang.String" itemvalue="type" />
+            <item index="4" class="java.lang.String" itemvalue="isLoggedIn" />
+            <item index="5" class="java.lang.String" itemvalue="userRole" />
           </list>
         </value>
       </option>

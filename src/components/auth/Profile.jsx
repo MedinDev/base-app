@@ -191,9 +191,15 @@ const Profile = () => {
                             <option key={role.id} value={role.name}>{role.name}</option>
                         ))}
                     </select>
-                    <button onClick={handleUpdateRole}
-                            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Update Role
-                    </button>
+                    <div className="flex flex-row gap-6">
+                        <button onClick={handleUpdateRole}
+                                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Update Role
+                        </button>
+                        <Link to={"/conversation"}
+                              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Message
+                        </Link>
+                    </div>
+
                 </div>
                 {errorMessage &&
                     <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"

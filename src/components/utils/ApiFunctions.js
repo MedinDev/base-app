@@ -11,12 +11,13 @@ api.interceptors.request.use((config) => {
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
-    config.headers["Content-Type"] = "application/json";
+    if (!(config.data instanceof FormData)) {
+        config.headers["Content-Type"] = "application/json";
+    }
     return config;
 }, (error) => {
     return Promise.reject(error);
 });
-
 // Axios Response and Error Interceptors for Centralized Error Handling
 api.interceptors.response.use((response) => {
     // You can perform actions based on successful responses here
@@ -27,18 +28,42 @@ api.interceptors.response.use((response) => {
     throw new Error(errorMessage);
 });
 
+
 // Helper Function for FormData Creation
 const createFormData = (data) => {
     const formData = new FormData();
-    Object.entries(data).forEach(([key, value]) => formData.append(key, value));
+    Object.entries(data).forEach(([key, value]) => {
+        if (value instanceof File) {
+            formData.append(key, value, value.name);
+        } else {
+            formData.append(key, value);
+        }
+    });
     return formData;
 };
 
 // API Functions
 
-export async function addHouse(data) {
-    const formData = createFormData(data);
-    const response = await api.post("/houses/add/new-house", formData);
+export async function addHouse(photo, houseType, housePrice,
+                               houseRoom, houseBathroom, houseSurface,
+                               houseCountry, houseAddress, houseYear, houseDescription) {
+    const formData = new FormData();
+    formData.append('photo', photo);
+    formData.append('houseType', houseType);
+    formData.append('housePrice', housePrice);
+    formData.append('houseRoom', houseRoom);
+    formData.append('houseBathroom', houseBathroom);
+    formData.append('houseSurface', houseSurface);
+    formData.append('houseCountry', houseCountry);
+    formData.append('houseAddress', houseAddress);
+    formData.append('houseYear', houseYear);
+    formData.append('houseDescription', houseDescription);
+
+    const response = await api.post("/houses/add/new-house", formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
     return response.data; // Assuming the API returns some data on success
 }
 
@@ -134,5 +159,20 @@ export async function updateUserRole(userId, newRole) {
 
 export async function resetPassword(resetPasswordRequest) {
     const response = await api.post("/users/reset-password", resetPasswordRequest);
+    return response.data;
+}
+
+export async function startConversation(user, role) {
+    const response = await api.post("/api/conversations/start", {user, role});
+    return response.data;
+}
+
+export async function sendMessage(conversationId, sender, content) {
+    const response = await api.post(`/api/conversations/${conversationId}/send`, {sender, content});
+    return response.data;
+}
+
+export async function getConversation(conversationId) {
+    const response = await api.get(`/api/conversations/${conversationId}`);
     return response.data;
 }

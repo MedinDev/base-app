@@ -16,6 +16,7 @@ import Login from "./components/auth/Login";
 import Registration from "./components/auth/Registration";
 import Profile from "./components/auth/Profile";
 import ForgotPassword from "./components/auth/Forgot Password";
+import Message from "./components/auth/Message";
 
 function App() {
     return (
@@ -35,8 +36,9 @@ function App() {
                     <Route path={"/find-bookings"} element={<FindBooking/>}/>
                     <Route path={"/forgotPassword"} element={<ForgotPassword/>}/>
                     <Route path={"/login"} element={<Login/>}/>
-                    <Route path="/register" element={<Registration/>}/>
-                    <Route path="/profile" element={<Profile/>}/>
+                    <Route path={"/register"} element={<Registration/>}/>
+                    <Route path={"/profile"} element={<Profile/>}/>
+                    <Route path={"/conversation"} element={<Message/>}/>
                 </Routes>
                 {/*<Footer/>*/}
             </main>

@@ -24,19 +24,15 @@ const Hero = () => {
                 <div data-aos="zoom-in" id='form'
                      className="bg-white lg:w-[70%] w-full m-auto grid lg:grid-cols-4 grid-cols-1 justify-center items-center gap-6 p-8 rounded-xl -mt-14">
                     <div className='w-full'>
-                        <h1 className='text-black font-semibold dark:text-white'>LOCATION</h1>
-                        <input type="text" placeholder='Enter an address, state, city or pincode'
+                        <h1 className='text-black font-semibold dark:text-white'>Check-in</h1>
+                        <input type="date" placeholder='select a date'
                                className='bg-white p-2 w-full mt-2 border-b-[1px] border-[#c9c7c1]'/>
                     </div>
                     <div className='w-full'>
-                        <h1 className='text-black dark:text-white font-semibold'>TYPE</h1>
-                        <select id="selectOption" name="selectOption"
-                                className='bg-white p-2 border-b-[1px] w-full mt-2 border-[#c9c7c1] text-gray-500 text-md'>
-                            <option value="" disabled selected>Select Property</option>
-                            <option value="option1">Rentals</option>
-                            <option value="option2">Sales</option>
-                            <option value="option3">Commercial</option>
-                        </select>
+                        <h1 className='text-black font-semibold dark:text-white'>Check-out</h1>
+                        <input type="date"
+                               placeholder='select a date'
+                               className='bg-white p-2 w-full mt-2 border-b-[1px] border-[#c9c7c1]'/>
                     </div>
                     <div className='w-full'>
                         <h1 className='text-black dark:text-white font-semibold'>CATEGORY</h1>

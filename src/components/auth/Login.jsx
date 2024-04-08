@@ -26,7 +26,9 @@ const Login = () => {
             const token = success.token
             auth.handleLogin(token)
             navigate(redirectUrl, {replace: true})
+            navigate("/profile")
         } else {
+            alert("Invalid username or password.");
             setErrorMessage("Invalid username or password. Please try again.")
         }
         setTimeout(() => {

@@ -1,8 +1,13 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-
+import {startConversation} from '../utils/ApiFunctions'; // import the startConversation function
 
 const HouseCard = ({house}) => {
+    const handleStartConversation = async () => {
+        const role = 'owner'; // the role of the user starting the conversation
+        await startConversation(role);
+    };
+
     return (
         <div key={house.id} className="mb-4" xs={12}>
             <div className="bg-white shadow overflow-hidden sm:rounded-lg">
@@ -22,7 +27,11 @@ const HouseCard = ({house}) => {
                         <p className="mt-1 text-sm text-gray-500">Some house information goes here for the guest to read
                             through</p>
                     </div>
-                    <div className="flex-shrink-0 mt-3">
+                    <div className="flex flex-row gap-6">
+                        <Link to={"/conversation"} onClick={handleStartConversation}
+                              className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150">
+                            Chat with Owner
+                        </Link>
                         <Link to={`/book-house/${house.id}`}
                               className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150">
                             Book Now
@@ -31,7 +40,6 @@ const HouseCard = ({house}) => {
                 </div>
             </div>
         </div>
-
     );
 };
 

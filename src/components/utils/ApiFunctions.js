@@ -176,3 +176,18 @@ export async function getConversation(conversationId) {
     const response = await api.get(`/api/conversations/${conversationId}`);
     return response.data;
 }
+
+export async function getAllUsers() {
+    const response = await api.get("/admin/users");
+    return response.data;
+}
+
+export async function getAllUserLoginActivities() {
+    const response = await api.get("/admin/loginActivities");
+    return response.data;
+}
+
+export async function getAllUserLogoutActivities() {
+    const response = await api.get("/admin/logoutActivities");
+    return response.data;
+}

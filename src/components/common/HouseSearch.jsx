@@ -93,7 +93,7 @@ const HouseSearch = () => {
                                 <div className="flex items-center">
                                     <HouseTypeSelector
                                         handleHouseInputChange={handleInputChange}
-                                        newRoom={searchQuery}
+                                        new={searchQuery}
                                     />
                                     <button type="submit"
                                             className="ml-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50">Search
@@ -103,7 +103,6 @@ const HouseSearch = () => {
                         </div>
                     </div>
                 </form>
-
                 {isLoading ? (
                     <p className="mt-4">Finding available houses....</p>
                 ) : availableHouses ? (

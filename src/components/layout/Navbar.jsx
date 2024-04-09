@@ -19,14 +19,13 @@ const NavBar = () => {
     console.log(userRole);
 
     return (
-        <nav className=" px-5 py-3 shadow sticky top-0 z-50">
+        <nav className="bg-white px-5 py-3 shadow sticky top-0 z-50">
             <div className="container mx-auto flex flex-wrap items-center justify-between">
                 <Link to={"/"} className="text-xl text-gray-800 font-semibold">
                    <span className="text-2xl self-center font-semibold whitespace-nowrap dark:text-white">
-              RealEstate
-            </span>
+                        RealEstate
+                   </span>
                 </Link>
-
                 <button
                     className="text-gray-800 inline-flex p-3 hover:bg-gray-300 rounded lg:hidden ml-auto hover:text-gray-700 outline-none"
                     onClick={toggleMenu}>
@@ -73,7 +72,6 @@ const NavBar = () => {
                                 onClick={handleAccountClick}>
                                 Account
                             </button>
-
                             {showAccount && (
                                 <ul className="dropdown-menu absolute bg-white shadow rounded-lg mt-2">
                                     {isLoggedIn ? (
